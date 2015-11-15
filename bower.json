@@ -1,0 +1,14 @@
+{
+  "name": "readable-client",
+  "description": "Client app for Readale API",
+  "version": "0.0.0",
+  "homepage": "https://github.com/pubsy/readable-client",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0"
+  }
+}

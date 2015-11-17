@@ -14,11 +14,11 @@ angular.module('myApp', [
 .directive('parentDirective', function($http, $compile){
   return {
     restrict: 'E',
-    controller: function ($scope, $element, $attrs, $uibModal) {
+    controller: function ($scope, $element, $attrs, $uibModal, Navigation, Resource) {
 
       $scope.navigation = {};
       $scope.data = {};
-      $scope.search;
+      $scope.search = {};
 
       $scope.init = function(){
         $scope.loadNavigation(function(){
@@ -28,30 +28,7 @@ angular.module('myApp', [
 
       $scope.loadResource = function(url, method, formName){
         $scope.loadNavigation(function(){});
-        $scope.load(url, method, formName);
-      }
 
-      $scope.loadNavigation = function(successCallback){
-        $http({
-          method: 'GET',
-          url: 'http://localhost:9000/',
-          headers: {
-            'Accept': 'application/vnd.siren+json',
-            'Content-Type' : 'application/x-www-form-urlencoded'
-          }
-        }).then(function(response) {
-          $scope.navigation = response.data;
-          successCallback();
-        }, function errorCallback(response) {
-          alert('Error: ' + response);
-        });
-      }
-
-      $scope.load = function(url, method, formName){
-
-        $scope.search = {};
-
-        if(typeof method == "undefined") {method = 'GET';}
         var data = {};
         if(typeof formName !== "undefined") {
           if(method == 'GET'){
@@ -61,20 +38,26 @@ angular.module('myApp', [
           }
         }
 
-        $http({
-          method: method,
-          url: url,
-          data: data,
-          headers: {
-            'Accept': 'application/vnd.siren+json',
-            'Content-Type' : 'application/x-www-form-urlencoded'
-          }
-        }).then(function(response) {
-          var htm = '';
-          $scope.data = response.data;
+        $scope.load(url, method, data);
+      }
+
+      $scope.loadNavigation = function(successCallback){
+        Navigation.load().then(function(d) {
+          $scope.navigation = d;
+          successCallback();
+        });
+      }
+
+      $scope.load = function(url, data){
+
+        $scope.search = {};
+
+        Resource.load(url, data).then(function(data) {
+          $scope.data = data;
           $scope.search = $scope.getActionByRel('search');
 
-          switch (response.data.class) {
+          var htm;
+          switch (data.class) {
             case "NavigationResource":
               break;
             case "BooksListResource":
@@ -95,11 +78,7 @@ angular.module('myApp', [
           var compiled = $compile(htm)($scope);
           $element.html(compiled);
         }, function errorCallback(response) {
-            if(response.status == 401){
-              $scope.open();
-            } else {
-              //alert("shit");
-            }
+          alert("error " + response.status);
         });
       };
 
@@ -132,25 +111,24 @@ angular.module('myApp', [
         return $scope.getActionByRel(actions, rel) == null;
       }
 
-      $scope.open = function () {
+      $scope.loginPopup = function () {
 
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: 'modal/modal.html',
+          templateUrl: 'login/login.html',
           controller: 'ModalInstanceCtrl',
+          size: 'sm',
           resolve: {
             // items: function () {
             //   return $scope.items;
             // }
           }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-          //$scope.selected = selectedItem;
-        }, function () {
-          //$log.info('Modal dismissed at: ' + new Date());
-        });
       };
+
+      $scope.login = function(){
+        //$uibModalInstance.close();
+      }
 
       $scope.init();
     }

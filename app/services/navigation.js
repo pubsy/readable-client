@@ -8,7 +8,7 @@ angular.module('myApp')
 
       var promise = $http({
         method: 'GET',
-        url: 'http://localhost:9000/',
+        url: 'http://readable-web.herokuapp.com/',
         headers: {
           'Accept': 'application/vnd.siren+json',
           'Content-Type' : 'application/x-www-form-urlencoded'

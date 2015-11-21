@@ -2,6 +2,7 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
+  'config',
   'ui.bootstrap',
   'myApp.books',
   'myApp.book',
@@ -14,7 +15,7 @@ angular.module('myApp', [
 .directive('parentDirective', function($http, $compile){
   return {
     restrict: 'E',
-    controller: function ($scope, $element, $attrs, $uibModal, Navigation, Resource) {
+    controller: function ($scope, $element, $attrs, $uibModal, ENV, Navigation, Resource) {
 
       $scope.navigation = {};
       $scope.data = {};
@@ -42,7 +43,7 @@ angular.module('myApp', [
       }
 
       $scope.loadNavigation = function(successCallback){
-        Navigation.load().then(function(d) {
+        Navigation.load(ENV.apiEndpoint).then(function(d) {
           $scope.navigation = d;
           successCallback();
         });

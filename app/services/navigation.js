@@ -4,11 +4,11 @@ angular.module('myApp')
 
 .factory('Navigation',['$http', '$q', function($http, $q){
   return {
-    load: function(){
+    load: function(url){
 
       var promise = $http({
         method: 'GET',
-        url: 'https://readable-api.herokuapp.com/',
+        url: url,
         headers: {
           'Accept': 'application/vnd.siren+json',
           'Content-Type' : 'application/x-www-form-urlencoded'

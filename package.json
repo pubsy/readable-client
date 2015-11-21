@@ -6,8 +6,6 @@
   "repository": "https://github.com/pubsy/readable-client",
   "license": "MIT",
   "devDependencies": {
-    "grunt-cli": "^0.1.13",
-    "grunt-ng-constant": "^1.1.0",
     "http-server": "^0.6.1"
   },
   "scripts": {
@@ -15,6 +13,8 @@
     "start": "http-server -a localhost -p 8000 -c-1"
   },
   "dependencies": {
+    "grunt-cli": "^0.1.13",
+    "grunt-ng-constant": "^1.1.0",
     "bower": "^1.6.5",
     "express": "^4.13.3"
   }

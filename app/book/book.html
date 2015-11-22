@@ -1,23 +1,9 @@
-<div class="books-items ">
-  <div class="book">
-    <a href ng-click="loadResource(getHrefByRel(data.links,'self'))">
-      <img class="cover" ng-src="{{ data.properties.thumbnailUrl }}" width="70px" height="90px"/>
-      <div class="body">
-        <span class="author">{{ data.properties.authorName }}</span>
-        <span class="title">{{ data.properties.title }}</span>
-        <span class="count">{{ data.properties.readersCount }}</span>
-      </div>
-    </a>
-  </div>
-  <div ng-repeat="action in data.actions">
-    <button ng-click="open(action)">{{ action.name }}</button>
-      <!-- <h3>{{ action.name }}</h3>
-      <form name="{{ action.name }}" ng-submit="loadResource(action.href, action.method, action.name)">
-        <div ng-repeat="field in action.fields">
-          <label for="{{ field.name }}">{{ field.name }}</label>
-          <input type="text" name="{{ field.name }}">
-        </div>
-        <input type="submit" value="Submit">
-      </form> -->
+<div class="book">
+  <img class="cover" ng-src="{{ data.properties.thumbnailUrl }}" width="70px" height="90px"/>
+  <div class="body">
+    <span class="author">{{ data.properties.authorName }}</span>
+    <span class="title">{{ data.properties.title }}</span>
+    <div class="description">{{ data.properties.description }}</div>
+    <span class="count">Reading or willing to read: {{ data.properties.readersCount }}</span>
   </div>
 </div>

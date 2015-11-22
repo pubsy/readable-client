@@ -9,17 +9,19 @@ angular.module('myApp', [
   'myApp.user',
   'myApp.users',
   'myApp.navigation',
-  'myApp.search'
+  'myApp.search',
+  'myApp.services',
+  'ngCookies'
 ])
 
 .directive('parentDirective', function($http, $compile){
   return {
     restrict: 'E',
-    controller: function ($scope, $element, $attrs, $uibModal, ENV, Navigation, Resource) {
+    controller: function ($scope, $element, $attrs, $uibModal, ENV, Navigation, Resource, AuthenticationService) {
 
       $scope.navigation = {};
       $scope.data = {};
-      $scope.search = {};
+      $scope.search = null;
 
       $scope.init = function(){
         $scope.loadNavigation(function(){
@@ -113,25 +115,17 @@ angular.module('myApp', [
       }
 
       $scope.loginPopup = function () {
-
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'login/login.html',
-          controller: 'ModalInstanceCtrl',
-          size: 'sm',
-          resolve: {
-            // items: function () {
-            //   return $scope.items;
-            // }
-          }
+          controller: 'LoginCtrl',
+          size: 'sm'
         });
       };
-
-      $scope.login = function(){
-        //$uibModalInstance.close();
-      }
 
       $scope.init();
     }
   }
-});
+})
+
+angular.module('myApp.services', []);

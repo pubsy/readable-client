@@ -3,7 +3,10 @@
     <li ng-repeat="link in navigation.links">
       <a href ng-click="loadResource(link.href)">{{ link.rel[0] }}</a>
     </li>
-    <li>
+    <li ng-repeat="action in navigation.actions">
+      <a href ng-click="showActionModal(action)">{{ action.title }}</a>
+    </li>
+    <li ng-if="navigation.actions && isActionPresent(navigation.actions, 'register')">
       <a href ng-click="loginPopup()">Login</a>
     </li>
   </ul>

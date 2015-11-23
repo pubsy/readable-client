@@ -29,24 +29,20 @@ angular.module('myApp', [
         });
       }
 
-      $scope.loadResource = function(url, method, formName){
+      $scope.loadResource = function(url, formName){
         $scope.loadNavigation(function(){});
 
         var data = {};
         if(typeof formName !== "undefined") {
-          if(method == 'GET'){
-            url += '?' + $('[name="'+ formName +'"]').serialize();
-          } else {
-            data = $('[name="'+ formName +'"]').serialize();
-          }
+          url += '?' + $('[name="'+ formName +'"]').serialize();
         }
 
-        $scope.load(url, method, data);
+        $scope.load(url, data);
       }
 
       $scope.loadNavigation = function(successCallback){
-        Navigation.load(ENV.apiEndpoint).then(function(d) {
-          $scope.navigation = d;
+        Navigation.load(ENV.apiEndpoint).then(function(data) {
+          $scope.navigation = data;
           successCallback();
         });
       }
@@ -110,7 +106,7 @@ angular.module('myApp', [
         return null;
       }
 
-      $scope.isActionPresent = function(rel){
+      $scope.isActionPresent = function(actions, rel){
         return $scope.getActionByRel(actions, rel) == null;
       }
 
@@ -122,6 +118,18 @@ angular.module('myApp', [
           size: 'sm'
         });
       };
+
+      $scope.showActionModal = function(action){
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'modal/modal.html',
+          controller: 'ModalInstanceCtrl',
+          size: 'sm',
+          resolve: {
+            action: action
+          }
+        });
+      }
 
       $scope.init();
     }

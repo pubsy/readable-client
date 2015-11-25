@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('myApp')
+angular.module('myApp.services')
 
 .factory('Navigation',['$http', '$q', function($http, $q){
   return {
-    load: function(){
+    load: function(url){
 
       var promise = $http({
         method: 'GET',
-        url: 'http://readable-api.herokuapp.com/',
+        url: url,
         headers: {
           'Accept': 'application/vnd.siren+json',
           'Content-Type' : 'application/x-www-form-urlencoded'

@@ -1,6 +1,6 @@
-<div ng-if="search">
+<div ng-if="search" class="search">
   <form name="search-form"
-    ng-submit="loadResource(search.href, search.method, 'search-form')">
+    ng-submit="loadResource(search.href, 'search-form')">
     <div class="input-group full-width">
       <input type="text" name="{{ search.fields[0].name }}" class="search-input form-control" placeholder="{{ search.title }}">
       <span class="input-group-btn">

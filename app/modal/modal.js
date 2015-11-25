@@ -2,10 +2,25 @@
 
 angular.module('myApp')
 
-.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+.controller('ModalInstanceCtrl', function ($http, $scope, $uibModalInstance, action) {
 
-  $scope.ok = function () {
-    $uibModalInstance.close();//$scope.selected.item);
+  $scope.action = action;
+
+  $scope.submitAction = function () {
+    var data = $('[name="'+ $scope.action.name +'"]').serialize();
+
+    $http({
+      method: $scope.action.method,
+      url: $scope.action.href,
+      data: data,
+      headers: {
+        'Accept': 'application/vnd.siren+json',
+        'Content-Type' : 'application/x-www-form-urlencoded'
+      }
+    }).then(function(response) {
+      $scope.loadResource($scope.getHrefByRel($scope.data.links, 'self'));
+      $uibModalInstance.close();
+    });
   };
 
   $scope.cancel = function () {

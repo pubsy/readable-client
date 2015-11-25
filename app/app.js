@@ -2,23 +2,26 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
+  'config',
   'ui.bootstrap',
   'myApp.books',
   'myApp.book',
   'myApp.user',
   'myApp.users',
   'myApp.navigation',
-  'myApp.search'
+  'myApp.search',
+  'myApp.services',
+  'ngCookies'
 ])
 
 .directive('parentDirective', function($http, $compile){
   return {
     restrict: 'E',
-    controller: function ($scope, $element, $attrs, $uibModal, Navigation, Resource) {
+    controller: function ($scope, $element, $attrs, $uibModal, ENV, Navigation, Resource, AuthenticationService) {
 
       $scope.navigation = {};
       $scope.data = {};
-      $scope.search = {};
+      $scope.search = null;
 
       $scope.init = function(){
         $scope.loadNavigation(function(){
@@ -26,24 +29,20 @@ angular.module('myApp', [
         });
       }
 
-      $scope.loadResource = function(url, method, formName){
+      $scope.loadResource = function(url, formName){
         $scope.loadNavigation(function(){});
 
         var data = {};
         if(typeof formName !== "undefined") {
-          if(method == 'GET'){
-            url += '?' + $('[name="'+ formName +'"]').serialize();
-          } else {
-            data = $('[name="'+ formName +'"]').serialize();
-          }
+          url += '?' + $('[name="'+ formName +'"]').serialize();
         }
 
-        $scope.load(url, method, data);
+        $scope.load(url, data);
       }
 
       $scope.loadNavigation = function(successCallback){
-        Navigation.load().then(function(d) {
-          $scope.navigation = d;
+        Navigation.load(ENV.apiEndpoint).then(function(data) {
+          $scope.navigation = data;
           successCallback();
         });
       }
@@ -107,30 +106,34 @@ angular.module('myApp', [
         return null;
       }
 
-      $scope.isActionPresent = function(rel){
+      $scope.isActionPresent = function(actions, rel){
         return $scope.getActionByRel(actions, rel) == null;
       }
 
       $scope.loginPopup = function () {
-
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'login/login.html',
-          controller: 'ModalInstanceCtrl',
-          size: 'sm',
-          resolve: {
-            // items: function () {
-            //   return $scope.items;
-            // }
-          }
+          controller: 'LoginCtrl',
+          size: 'sm'
         });
       };
 
-      $scope.login = function(){
-        //$uibModalInstance.close();
+      $scope.showActionModal = function(action){
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'modal/modal.html',
+          controller: 'ModalInstanceCtrl',
+          size: 'sm',
+          resolve: {
+            action: action
+          }
+        });
       }
 
       $scope.init();
     }
   }
-});
+})
+
+angular.module('myApp.services', []);

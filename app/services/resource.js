@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp')
+angular.module('myApp.services')
 
 .factory('Resource',['$http', '$q', function($http, $q){
   return {

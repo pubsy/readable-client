@@ -11,7 +11,7 @@ angular.module('myApp')
   };
 
   $scope.login = function(user){
-    AuthenticationService.SetCredentials(user.username,user.password);
+    AuthenticationService.SetCredentials(user.username, user.password);
 
     var url = $scope.getHrefByRel($scope.data.links, 'self');
     $scope.loadResource(url);

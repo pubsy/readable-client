@@ -5,8 +5,8 @@ var module = angular.module('myApp.services');
 module.factory('AuthenticationService', ['CookiesService', '$http', 'Base64', function(CookiesService, $http, Base64) {
 	 var service = {};
 	 service.SetCredentials = function (username, password) {
-		 var username = "test";//CookiesService.getUsername() ? CookiesService.getUsername() : '';
-		 var password = "123";//CookiesService.getToken() ? CookiesService.getToken() : '';
+		 //var username = "test";//CookiesService.getUsername() ? CookiesService.getUsername() : '';
+		 //var password = "123";//CookiesService.getToken() ? CookiesService.getToken() : '';
 
 		 var authdata = Base64.encode(username + ':' + password);
 

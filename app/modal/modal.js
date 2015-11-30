@@ -7,7 +7,7 @@ angular.module('myApp')
   $scope.action = action;
 
   $scope.submitAction = function () {
-    var data = $('[name="'+ $scope.action.name +'"]').serialize();
+    var data = $('[name="'+ $scope.action.rel[0] +'"]').serialize();
 
     $http({
       method: $scope.action.method,

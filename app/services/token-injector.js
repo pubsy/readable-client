@@ -5,13 +5,22 @@ var module = angular.module('myApp.services');
 module.factory('AuthenticationService', ['CookiesService', '$http', 'Base64', function(CookiesService, $http, Base64) {
 	 var service = {};
 	 service.SetCredentials = function (username, password) {
-		 var username = "test";//CookiesService.getUsername() ? CookiesService.getUsername() : '';
-		 var password = "123";//CookiesService.getToken() ? CookiesService.getToken() : '';
+		 //var username = CookiesService.getUsername() ? CookiesService.getUsername() : '';
+		 //var password = CookiesService.getToken() ? CookiesService.getToken() : '';
 
 		 var authdata = Base64.encode(username + ':' + password);
 
 		 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 	 };
+
+	 service.isAuthenticated = function () {
+		 return $http.defaults.headers.common['Authorization'] === undefined;
+	 }
+
+	 service.logout =  function () {
+		 $http.defaults.headers.common['Authorization'] = undefined;
+	 }
+
 	 return service;
 }]);
 

@@ -3,7 +3,7 @@
         <h3 class="modal-title">{{ action.title }}</h3>
     </div>
     <div class="modal-body">
-      <form name="{{ action.name }}" ng-submit="submitAction()" role="form">
+      <form name="{{ action.rel[0] }}" ng-submit="submitAction()" role="form">
         <div ng-repeat="param in action.fields" class="form-group">
           <label for="username">{{ param.name }}</label>
           <input type="text" name="{{ param.name }}" id="{{ param.name }}" class="form-control" />

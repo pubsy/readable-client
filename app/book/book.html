@@ -9,6 +9,6 @@
     </div>
   </div>
   <div ng-repeat="action in data.actions">
-    <button ng-click="showActionModal(action)" class="btn btn-default">{{ action.title }}</button>
+    <button ng-if="hasRel(action, 'operation')" ng-click="showActionModal(action)" class="btn btn-default">{{ action.title }}</button>
   </div>
 </div>

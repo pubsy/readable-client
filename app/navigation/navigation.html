@@ -1,13 +1,16 @@
 <div class="masthead">
   <ul class="nav nav-pills pull-right">
-    <li ng-repeat="link in navigation.links">
-      <a href ng-click="loadResource(link.href)">{{ link.rel[0] }}</a>
+    <li ng-repeat="link in data.links">
+      <a ng-if="hasRel(link, 'navigation')" href ng-click="loadResource(link.href)">{{ link.title }}</a>
     </li>
-    <li ng-repeat="action in navigation.actions">
-      <a href ng-click="showActionModal(action)">{{ action.title }}</a>
+    <li ng-repeat="action in data.actions">
+      <a ng-if="hasRel(action, 'navigation')" href ng-click="showActionModal(action)">{{ action.title }}</a>
     </li>
-    <li ng-if="navigation.actions && isActionPresent(navigation.actions, 'register')">
+    <li ng-if="isAuthenticated()">
       <a href ng-click="loginPopup()">Login</a>
+    </li>
+    <li ng-if="!isAuthenticated()">
+      <a href ng-click="logout()">Logout</a>
     </li>
   </ul>
   <h3 class="muted">Readable</h3>

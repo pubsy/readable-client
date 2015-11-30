@@ -11,6 +11,7 @@ angular.module('myApp', [
   'myApp.navigation',
   'myApp.search',
   'myApp.services',
+  'myApp.pagination',
   'ngCookies'
 ])
 
@@ -19,32 +20,20 @@ angular.module('myApp', [
     restrict: 'E',
     controller: function ($scope, $element, $attrs, $uibModal, ENV, Navigation, Resource, AuthenticationService) {
 
-      $scope.navigation = {};
       $scope.data = {};
       $scope.search = null;
 
       $scope.init = function(){
-        $scope.loadNavigation(function(){
-            $scope.loadResource($scope.getHrefByRel($scope.navigation.links, 'Books'));
-        });
+          $scope.loadResource(ENV.apiEndpoint);
       }
 
       $scope.loadResource = function(url, formName){
-        $scope.loadNavigation(function(){});
-
         var data = {};
         if(typeof formName !== "undefined") {
           url += '?' + $('[name="'+ formName +'"]').serialize();
         }
 
         $scope.load(url, data);
-      }
-
-      $scope.loadNavigation = function(successCallback){
-        Navigation.load(ENV.apiEndpoint).then(function(data) {
-          $scope.navigation = data;
-          successCallback();
-        });
       }
 
       $scope.load = function(url, data){
@@ -80,6 +69,15 @@ angular.module('myApp', [
           alert("error " + response.status);
         });
       };
+
+      $scope.hasRel = function(linkOrOperation, rel){
+        for(var currRel of linkOrOperation.rel){
+          if(currRel == rel){
+            return true;
+          }
+        }
+        return false;
+      }
 
       $scope.getHrefByRel = function(links, rel){
         for(var link of links){

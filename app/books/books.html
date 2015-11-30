@@ -1,4 +1,4 @@
-<div class="books-items">
+<div class="books-items clearfix">
   <div ng-repeat="book in data.properties.items" class="book">
     <img class="cover" ng-src="{{ book.properties.thumbnailUrl }}" width="70px" height="90px"/>
     <div class="body">
@@ -6,7 +6,7 @@
       <a href ng-click="loadResource(getHrefByRel(book.links, 'self'))">
         <span class="title truncate">{{ book.properties.title }}</span>
       </a>
-      <span class="count truncate"> Readers count: {{ book.properties.readersCount }}</span>
+      <span class="count truncate">Readers count: {{ book.properties.readersCount }}</span>
     </div>
   </div>
 </div>

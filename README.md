@@ -2,6 +2,10 @@
 
 This project is a web application which is a front-end to Readable API
 
+## Staging environment
+
+Available by the link: http://readable-web.herokuapp.com/
+
 ## Getting Started
 
 To get you started you can simply clone the readbale-client repository and install the dependencies:
